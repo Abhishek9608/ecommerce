@@ -12,7 +12,6 @@
 }
 .container {
   margin-left: 60px;
-  background-color: lightgray;
 }
 .cardmedia {
   height: 260px;
@@ -32,12 +31,19 @@
 
 .categoriesHeader {
   margin-top: 30px;
-  text-align: center;
+  font-weight: 500;
+  /* text-align: center; */
 }
 .categories {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   font-size: 14px;
+}
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

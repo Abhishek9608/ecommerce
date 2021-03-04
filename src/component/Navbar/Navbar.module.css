@@ -10,3 +10,22 @@
   display: flex;
   justify-content: space-between;
 }
+.inputSearch {
+  color: rgba(0, 0, 0, 0.87);
+  cursor: text;
+  font-size: 1rem;
+  text-align: center;
+  align-items: center;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  /* font-weight: 400; */
+  /* line-height: 1.1876em; */
+  border: 1px solid #00040a;
+  letter-spacing: 0.2em;
+  padding-bottom: 10px;
+  text-transform: uppercase;
+}
+.IconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}

@@ -2,8 +2,14 @@ import React from "react";
 import AppBar from "@material-ui/core/AppBar";
 import { Link } from "react-router-dom";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import { Toolbar, Grid } from "@material-ui/core";
+import { Toolbar, Grid, TextField, Input } from "@material-ui/core";
 import style from "./Navbar.module.css";
+import IconButton from "@material-ui/core/IconButton";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import SearchIcon from "@material-ui/icons/Search";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -53,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "21px",
     color: "#000000",
     cursor: "pointer",
+    textDecoration: "none",
   },
   footer: {
     "& .MuiTypography-colorTextPrimary": {
@@ -73,27 +80,34 @@ function Navbar() {
           <div className={style.logo}>mbmb</div>
           <nav>
             <Link variant="body1" to="/home" color="textPrimary" className={classes.link}>
-              Home
+              HOME
             </Link>
             <Link variant="body1" color="textPrimary" className={classes.link}>
-              About
+              FOR YOU
             </Link>
             <Link variant="body1" to="/courses" color="textPrimary" className={classes.link}>
-              Courses
+              ABOUT US
             </Link>
             <Link variant="body1" color="textPrimary" className={classes.link}>
-              Contact
-            </Link>
-            <Link variant="body1" color="textPrimary" className={classes.link}>
-              Shop
-            </Link>
-            <Link variant="body1" color="textPrimary" className={classes.link}>
-              Blog
-            </Link>
-            <Link variant="body1" color="textPrimary" className={classes.link}>
-              Quiz
+              CONTACT US
             </Link>
           </nav>
+
+          <Grid xs={4} className={style.IconContainer}>
+            <Input
+              className={style.InputSeach}
+              id="input-with-icon-adornment"
+              placeholder="Search"
+              endAdornment={
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              }
+            />
+            <FavoriteBorderIcon />
+            <ShoppingCartIcon />
+            <AccountCircleIcon />
+          </Grid>
         </Toolbar>
       </AppBar>
     </div>
