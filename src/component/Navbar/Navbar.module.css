@@ -1,0 +1,12 @@
+.logo {
+  width: 108px;
+  height: 56px;
+  /* background-image: url("../../assets/images/Logo.png"); */
+  margin-left: 30px;
+  background-color: #009966;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+}
