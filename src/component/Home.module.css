@@ -1,0 +1,43 @@
+.logo {
+  width: 108px;
+  height: 56px;
+  /* background-image: url("../../assets/images/Logo.png"); */
+  margin-left: 30px;
+  background-color: #009966;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+.container {
+  margin-left: 60px;
+  background-color: lightgray;
+}
+.cardmedia {
+  height: 260px;
+}
+.filterContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.categoriesContainer {
+}
+
+.categoriesHeader {
+  margin-top: 30px;
+  text-align: center;
+}
+.categories {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 14px;
+}
