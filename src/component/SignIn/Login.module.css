@@ -1,0 +1,53 @@
+.input {
+  appearance: none;
+  -webkit-appearance: none;
+  background: white;
+  border: 1px solid #cccccc;
+  border-radius: 0;
+  color: #00040a;
+  display: block;
+  font: 400 normal 1.286rem/1em "News Cycle", Helvetica, Arial, "Lucida Grande", sans-serif;
+  letter-spacing: 0.1em;
+  margin: 0 auto;
+  max-width: 100%;
+  outline: none;
+  padding: 10px 20px;
+  resize: none;
+  transition: border-color 0.25s ease-in-out;
+  width: calc(50% - 80px);
+  margin-bottom: 25px;
+}
+
+.label {
+  width: calc(50% - 42px);
+  /* text-align: center; */
+  color: #00040a;
+  display: inline-block;
+  font-size: 1rem;
+  line-height: 1.25em;
+  margin: 0 auto;
+  padding: 0;
+  margin-bottom: 15px;
+  /* margin-top: 15px; */
+}
+
+.signInbutton {
+  margin-top: 40px;
+  width: calc(50% - 40px);
+  appearance: none;
+  background: #00040a;
+  border: 0 none;
+  border-radius: 0;
+  color: white;
+  cursor: pointer;
+  display: block;
+  font: 600 normal 1rem/36px "News Cycle", Helvetica, Arial, "Lucida Grande", sans-serif;
+  height: 40px;
+  letter-spacing: 0.1em;
+  margin: 0 auto;
+  outline: none;
+  padding: 0 20px 4px;
+  transition: background-color 0.25s ease-in-out;
+  text-align: center;
+  text-transform: uppercase;
+}

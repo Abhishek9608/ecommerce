@@ -71,8 +71,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Navbar() {
+function Navbar(props) {
   const classes = useStyles();
+
   return (
     <div>
       <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
@@ -98,6 +99,8 @@ function Navbar() {
               className={style.InputSeach}
               id="input-with-icon-adornment"
               placeholder="Search"
+              value={props.search}
+              onChange={props.handleInput}
               endAdornment={
                 <InputAdornment position="start">
                   <SearchIcon />

@@ -16,7 +16,7 @@ const theme = createMuiTheme({
       fontSize: "2.75rem",
     },
     body1: {
-      borderBottom: "1px solid #00040a",
+      // borderBottom: "1px solid #00040a",
       color: "#00040a",
       font: "600 normal 0.857em/1em 'News Cycle', Helvetica, Arial, 'Lucida Grande', sans-serif",
       letterSpacing: "0.2em",
