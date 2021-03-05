@@ -101,8 +101,19 @@ class Home extends Component {
     };
   }
   handleSelect = (event) => {
+    let dataHolder = this.state.data;
+    dataHolder.sort((a, b) => {
+      if (event.target.value === "date") {
+        console.log("called", event.target.value, new Date(a.date), a.date);
+        return new Date(a.date) - new Date(b.date);
+      } else {
+        return parseFloat(a.Price) - parseFloat(b.Price);
+      }
+    });
+    console.log(dataHolder, event.target.value);
     this.setState({
       ...this.state,
+      data: dataHolder,
       select: event.target.value,
     });
   };
