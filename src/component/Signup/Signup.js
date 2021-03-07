@@ -7,7 +7,7 @@ import style from "./Signup.module.css";
 function SignUp() {
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
       <Grid xs={12} container justify="center">
         <Grid xs={10} justify="center">
           <Typography variant="h2">Register</Typography>

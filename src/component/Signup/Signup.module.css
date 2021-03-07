@@ -14,13 +14,13 @@
   padding: 10px 20px;
   resize: none;
   transition: border-color 0.25s ease-in-out;
-  width: calc(50% - 80px);
+  width: calc(80%);
   margin-bottom: 25px;
 }
 
 .label {
   font: 400 normal 1em/1.286em "News Cycle", Helvetica, Arial, "Lucida Grande", sans-serif;
-  width: calc(50% - 42px);
+  width: calc(80% + 50px);
   /* text-align: center; */
   color: #00040a;
   display: inline-block;
@@ -34,7 +34,7 @@
 
 .signInbutton {
   margin-top: 40px;
-  width: calc(50% - 40px);
+  width: calc(80% + 50px);
   appearance: none;
   background: #00040a;
   border: 0 none;

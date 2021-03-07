@@ -1,28 +1,38 @@
 import React, { Component } from "react";
-import AppBar from "@material-ui/core/AppBar";
 import { Link } from "react-router-dom";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import { Toolbar, Grid } from "@material-ui/core";
+import { Grid, ListItem } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 import style from "./Home.module.css";
 import Navbar from "../Navbar/Navbar";
 import Data from "./../data.js";
-
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import data from "./../data.js";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import Footer from "../Footer/Footer";
+import Modal from "@material-ui/core/Modal";
+import Login from "../SignIn/Login";
+import SignUp from "../Signup/Signup";
 
-const useStyles = makeStyles((theme) => ({
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
+
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
+
+const useStyles = (theme) => ({
   "@global": {
     ul: {
       margin: 0,
@@ -30,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
       listStyle: "none",
     },
   },
-
+  parent: {},
   root: {
     flexGrow: 1,
     maxWidth: 345,
@@ -38,14 +48,20 @@ const useStyles = makeStyles((theme) => ({
       border: "none",
       backgroundColor: "#009966",
     },
+    "& .MuiMenuItem-root": {
+      marginBottom: "5px",
+    },
   },
   media: {
     height: "140px",
   },
   paper: {
-    padding: theme.spacing(2),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
+    position: "absolute",
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
   },
   appBar: {
     borderBottom: `1px solid ${theme.palette.divider}`,
@@ -79,11 +95,18 @@ const useStyles = makeStyles((theme) => ({
       color: "#fff",
     },
   },
-}));
+  formControl: {
+    marginTop: "10px",
+  },
+  MenuItem: {
+    marginBottom: "5px",
+  },
+});
 
 class Home extends Component {
   constructor() {
     super();
+
     this.state = {
       data: Data(),
       checkbox: {
@@ -98,7 +121,34 @@ class Home extends Component {
       },
       search: "",
       select: "date",
+      open: {
+        login: false,
+        signup: false,
+      },
+      modalStyle: getModalStyle(),
     };
+  }
+
+  reset() {
+    this.setState({
+      data: Data(),
+      checkbox: {
+        categories: {
+          jeans: false,
+          top: false,
+        },
+        Brand: {
+          Nike: false,
+          Adidas: false,
+        },
+      },
+      search: "",
+      select: "date",
+      open: {
+        login: false,
+        signup: false,
+      },
+    });
   }
   handleSelect = (event) => {
     let dataHolder = this.state.data;
@@ -106,11 +156,12 @@ class Home extends Component {
       if (event.target.value === "date") {
         console.log("called", event.target.value, new Date(a.date), a.date);
         return new Date(a.date) - new Date(b.date);
-      } else {
+      } else if (event.target.value === "asc") {
         return parseFloat(a.Price) - parseFloat(b.Price);
+      } else {
+        return parseFloat(b.Price) - parseFloat(a.Price);
       }
     });
-    console.log(dataHolder, event.target.value);
     this.setState({
       ...this.state,
       data: dataHolder,
@@ -120,13 +171,14 @@ class Home extends Component {
   filterIt(arr, searchKey) {
     return arr.filter(function (obj) {
       return Object.keys(obj).some(function (key) {
-        return obj[key].toLowerCase().includes(searchKey.toLowerCase());
+        console.log(obj[key]);
+        return `${obj[key]}`.toLocaleLowerCase().includes(searchKey.toLocaleLowerCase());
       });
     });
   }
 
   componentDidUpdate(previousProps, previousState) {
-    if (previousState.checkbox !== this.state.checkbox) {
+    if (previousState.checkbox !== this.state.checkbox && !this.state.search) {
       // console.log(this.state.checkbox);
       let data = Data();
       let found = false;
@@ -148,20 +200,39 @@ class Home extends Component {
     }
 
     if (previousState.search !== this.state.search) {
-      console.log("called", this.state.search);
       if (!this.state.search) {
         let result = Data();
         this.setState({
           ...this.state,
           data: result,
+          checkbox: {
+            categories: {
+              jeans: false,
+              top: false,
+            },
+            Brand: {
+              Nike: false,
+              Adidas: false,
+            },
+          },
         });
       } else {
         // setTimeout(function () {
-        console.log(this.state.search);
-        let result = this.filterIt(Data(), this.state.search);
+        let getData = Data();
+        let result = this.filterIt(getData, this.state.search);
         this.setState({
           ...this.state,
           data: result,
+          checkbox: {
+            categories: {
+              jeans: false,
+              top: false,
+            },
+            Brand: {
+              Nike: false,
+              Adidas: false,
+            },
+          },
         });
         // }, 3000);
       }
@@ -170,7 +241,6 @@ class Home extends Component {
 
   handleChange = (event, type) => {
     // console.log(event.target.type);
-    console.log("Hello");
     this.setState({
       ...this.state,
       checkbox: {
@@ -190,6 +260,25 @@ class Home extends Component {
     });
   };
 
+  handleClose = (close) => {
+    this.setState({
+      ...this.state,
+      open: {
+        ...this.state.open,
+        [close]: false,
+      },
+    });
+  };
+  handleOpen = (open) => {
+    this.setState({
+      ...this.state,
+      open: {
+        ...this.state.open,
+        [open]: true,
+      },
+    });
+  };
+
   render() {
     console.log(this.state);
     const { classes } = this.props;
@@ -197,15 +286,15 @@ class Home extends Component {
     return (
       <>
         <Grid xs={12}>
-          <Navbar search={this.search} handleInput={this.handleInput} />
+          <Navbar search={this.search} handleInput={this.handleInput} handleOpen={this.handleOpen} />
 
           <Grid container xs={11} className={style.container}>
             <Grid xs={2}>
               <Grid xs={12} className={style.filterContainer}>
                 <div>FILTERS</div>
-                {/* <div style={{ cursor: "pointer" }} onClick={() => this.setState({ ...this.state, data: data() })}>
+                <div style={{ cursor: "pointer" }} onClick={() => this.reset()}>
                   RESET
-                </div> */}
+                </div>
               </Grid>
               <Grid xs={12} className={style.categoriesContainer}>
                 <div className={style.categoriesHeader}>Categories</div>
@@ -242,14 +331,23 @@ class Home extends Component {
               </Grid> */}
             </Grid>
             <Grid item xs={10}>
-              <FormControl className={classes.formControl}>
-                <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                <Select defaultValue="date" labelId="demo-simple-select-label" id="demo-simple-select" value={this.state.select} onChange={this.handleSelect}>
-                  <MenuItem value="price">Price</MenuItem>
-                  <MenuItem value="date">Newest</MenuItem>
-                  {/* <MenuItem value={30}>Thirty</MenuItem> */}
-                </Select>
-              </FormControl>
+              <Grid container justify="flex-end">
+                <FormControl className={classes.formControl} style={{ marginTop: "20px" }}>
+                  {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
+                  <Select defaultValue="date" labelId="demo-simple-select-label" id="demo-simple-select-outlined" value={this.state.select} onChange={this.handleSelect}>
+                    <ListItem value="asc" className={classes.MenuItem}>
+                      Low to Heigh
+                    </ListItem>
+                    <ListItem value="dsc" className={classes.MenuItem}>
+                      Hight to Low
+                    </ListItem>
+                    <ListItem value="date" className={classes.MenuItem}>
+                      Newest
+                    </ListItem>
+                    {/* <MenuItem value={30}>Thirty</MenuItem> */}
+                  </Select>
+                </FormControl>
+              </Grid>
               <Grid container>
                 {this.state.data &&
                   this.state.data?.map((item) => {
@@ -275,6 +373,17 @@ class Home extends Component {
               </Grid>
             </Grid>
           </Grid>
+          <Footer />
+          <Modal open={this.state.open.login} onClose={() => this.handleClose("login")} aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description">
+            <div style={this.state.modalStyle} className={classes.paper}>
+              <Login />
+            </div>
+          </Modal>
+          <Modal open={this.state.open.signup} onClose={() => this.handleClose("signup")} aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description">
+            <div style={this.state.modalStyle} className={classes.paper}>
+              <SignUp />
+            </div>
+          </Modal>
         </Grid>
       </>
     );

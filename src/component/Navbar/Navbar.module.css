@@ -1,14 +1,17 @@
 .logo {
   width: 108px;
-  height: 56px;
+  /* height: 56px; */
+  text-align: center;
+
   /* background-image: url("../../assets/images/Logo.png"); */
   margin-left: 30px;
-  background-color: #009966;
+  /* background-color: #009966; */
 }
 
 .toolbar {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .inputSearch {
   color: rgba(0, 0, 0, 0.87);
@@ -21,8 +24,9 @@
   /* line-height: 1.1876em; */
   border: 1px solid #00040a;
   letter-spacing: 0.2em;
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
   text-transform: uppercase;
+  background-color: #f5f5f6;
 }
 .IconContainer {
   display: flex;
