@@ -4,6 +4,7 @@ import "./App.css";
 import Home from "./component/Home/Home";
 import Login from "./component/SignIn/Login";
 import Signup from "./component/Signup/Signup";
+import Cart from "./component/Cart/cart";
 import { MuiThemeProvider, createMuiTheme, withStyles } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
@@ -45,6 +46,7 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
+          <Route path="/cart" component={Cart} />
         </Switch>
       </MuiThemeProvider>
     </>

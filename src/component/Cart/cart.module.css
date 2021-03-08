@@ -1,0 +1,66 @@
+.CardContent {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+
+.mainContent {
+  margin-top: 50px;
+  margin-left: 100px;
+
+  display: flex;
+
+  justify-content: space-evenly;
+}
+.mainBody {
+  display: flex;
+}
+.cover {
+  width: 110px;
+  margin-right: 10px;
+}
+.headerTypo {
+  color: #ddaaa5;
+}
+.incrementContainer {
+  width: 120px;
+  height: 40px;
+  border: 1px solid #cccccc;
+  display: flex;
+  /* padding: 5px 30px; */
+  margin-right: 30px;
+  text-align: center;
+  justify-content: space-between;
+  align-items: center;
+}
+.qtyminus {
+  /* margin: 4px;
+  padding: 4px;
+  font-size: 20px; */
+}
+.IconContainer {
+  display: flex;
+  padding: 10px;
+}
+.OrderHeader {
+  border: 1px solid #00040a;
+  border-width: 1px 0;
+  padding: 10px;
+}
+
+.billContainer {
+  margin: 40px 0px;
+}
+
+.subTotalContainer {
+  display: flex;
+  justify-content: space-around;
+}
+.GrandContainer {
+  display: flex;
+  justify-content: space-around;
+}
+.checkout {
+  background: #dcaba6 !important;
+  padding: 10px 102px !important;
+}
