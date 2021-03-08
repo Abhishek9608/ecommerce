@@ -54,11 +54,11 @@
 
 .subTotalContainer {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 .GrandContainer {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 .checkout {
   background: #dcaba6 !important;

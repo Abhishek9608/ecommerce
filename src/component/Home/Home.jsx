@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import { Grid, ListItem } from "@material-ui/core";
+import { Button, Grid, ListItem } from "@material-ui/core";
 import Checkbox from "@material-ui/core/Checkbox";
 import style from "./Home.module.css";
 import Navbar from "../Navbar/Navbar";
@@ -16,21 +16,6 @@ import Footer from "../Footer/Footer";
 import Modal from "@material-ui/core/Modal";
 import Login from "../SignIn/Login";
 import SignUp from "../Signup/Signup";
-
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
-function getModalStyle() {
-  const top = 50;
-  const left = 50;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
 
 const useStyles = (theme) => ({
   "@global": {
@@ -103,52 +88,38 @@ const useStyles = (theme) => ({
   },
 });
 
+function stateHolder() {
+  return {
+    data: Data(),
+    checkbox: {
+      categories: {
+        jeans: false,
+        top: false,
+      },
+      Brand: {
+        Nike: false,
+        Adidas: false,
+      },
+    },
+    search: "",
+    select: "date",
+    open: {
+      login: false,
+      signup: false,
+    },
+    cart: [],
+  };
+}
+
 class Home extends Component {
   constructor() {
     super();
-
-    this.state = {
-      data: Data(),
-      checkbox: {
-        categories: {
-          jeans: false,
-          top: false,
-        },
-        Brand: {
-          Nike: false,
-          Adidas: false,
-        },
-      },
-      search: "",
-      select: "date",
-      open: {
-        login: false,
-        signup: false,
-      },
-      modalStyle: getModalStyle(),
-    };
+    this.state = stateHolder();
   }
 
   reset() {
-    this.setState({
-      data: Data(),
-      checkbox: {
-        categories: {
-          jeans: false,
-          top: false,
-        },
-        Brand: {
-          Nike: false,
-          Adidas: false,
-        },
-      },
-      search: "",
-      select: "date",
-      open: {
-        login: false,
-        signup: false,
-      },
-    });
+    let stateCopy = stateHolder();
+    this.setState({ ...stateCopy });
   }
   handleSelect = (event) => {
     let dataHolder = this.state.data;
@@ -169,6 +140,7 @@ class Home extends Component {
     });
   };
   filterIt(arr, searchKey) {
+    // console.log(searchKey);
     return arr.filter(function (obj) {
       return Object.keys(obj).some(function (key) {
         console.log(obj[key]);
@@ -178,7 +150,7 @@ class Home extends Component {
   }
 
   componentDidUpdate(previousProps, previousState) {
-    if (previousState.checkbox !== this.state.checkbox && !this.state.search) {
+    if (previousState.checkbox !== this.state.checkbox && !this.props.search) {
       // console.log(this.state.checkbox);
       let data = Data();
       let found = false;
@@ -199,8 +171,8 @@ class Home extends Component {
       });
     }
 
-    if (previousState.search !== this.state.search) {
-      if (!this.state.search) {
+    if (previousProps.search !== this.props.search) {
+      if (!this.props.search) {
         let result = Data();
         this.setState({
           ...this.state,
@@ -219,7 +191,7 @@ class Home extends Component {
       } else {
         // setTimeout(function () {
         let getData = Data();
-        let result = this.filterIt(getData, this.state.search);
+        let result = this.filterIt(getData, this.props.search);
         this.setState({
           ...this.state,
           data: result,
@@ -253,72 +225,43 @@ class Home extends Component {
     });
   };
 
-  handleInput = (e) => {
-    this.setState({
-      ...this.state,
-      search: e.target.value,
-    });
-  };
-
-  handleClose = (close) => {
-    this.setState({
-      ...this.state,
-      open: {
-        ...this.state.open,
-        [close]: false,
-      },
-    });
-  };
-  handleOpen = (open) => {
-    this.setState({
-      ...this.state,
-      open: {
-        ...this.state.open,
-        [open]: true,
-      },
-    });
-  };
-
   render() {
     console.log(this.state);
     const { classes } = this.props;
     let { Brand, categories } = this.state.checkbox;
     return (
       <>
-        <Grid xs={12}>
-          <Navbar search={this.search} handleInput={this.handleInput} handleOpen={this.handleOpen} />
-
-          <Grid container xs={11} className={style.container}>
-            <Grid xs={2}>
-              <Grid xs={12} className={style.filterContainer}>
-                <div>FILTERS</div>
-                <div style={{ cursor: "pointer" }} onClick={() => this.reset()}>
-                  RESET
-                </div>
-              </Grid>
-              <Grid xs={12} className={style.categoriesContainer}>
-                <div className={style.categoriesHeader}>Categories</div>
-                <div className={style.categories}>
-                  <div>Jeans</div>
-                  <Checkbox name="jeans" checked={categories.jeans} onChange={(event) => this.handleChange(event, "categories")} inputProps={{ "aria-label": "uncontrolled-checkbox" }} />
-                </div>
-                <div className={style.categories}>
-                  <div>Top</div>
-                  <Checkbox name="top" checked={categories.top} onChange={(event) => this.handleChange(event, "categories")} inputProps={{ "aria-label": "uncontrolled-checkbox" }} />
-                </div>
-              </Grid>
-              <Grid xs={12} className={style.categoriesContainer}>
-                <div className={style.categoriesHeader}>Brand</div>
-                <div className={style.categories}>
-                  <div>Nike</div>
-                  <Checkbox name="Nike" checked={Brand.Nike} onChange={(event) => this.handleChange(event, "Brand")} inputProps={{ "aria-label": "uncontrolled-checkbox" }} />
-                </div>
-                <div className={style.categories}>
-                  <div>Addidas</div>
-                  <Checkbox name="Adidas" checked={Brand.Adidas} onChange={(event) => this.handleChange(event, "Brand")} inputProps={{ "aria-label": "uncontrolled-checkbox" }} />
-                </div>
-              </Grid>
-              {/* <Grid xs={12} className={style.categoriesContainer}>
+        <Grid container xs={11} className={style.container}>
+          <Grid xs={2}>
+            <Grid xs={12} className={style.filterContainer}>
+              <div>FILTERS</div>
+              <div style={{ cursor: "pointer" }} onClick={() => this.reset()}>
+                RESET
+              </div>
+            </Grid>
+            <Grid xs={12} className={style.categoriesContainer}>
+              <div className={style.categoriesHeader}>Categories</div>
+              <div className={style.categories}>
+                <div>Jeans</div>
+                <Checkbox name="jeans" checked={categories.jeans} onChange={(event) => this.handleChange(event, "categories")} inputProps={{ "aria-label": "uncontrolled-checkbox" }} />
+              </div>
+              <div className={style.categories}>
+                <div>Top</div>
+                <Checkbox name="top" checked={categories.top} onChange={(event) => this.handleChange(event, "categories")} inputProps={{ "aria-label": "uncontrolled-checkbox" }} />
+              </div>
+            </Grid>
+            <Grid xs={12} className={style.categoriesContainer}>
+              <div className={style.categoriesHeader}>Brand</div>
+              <div className={style.categories}>
+                <div>Nike</div>
+                <Checkbox name="Nike" checked={Brand.Nike} onChange={(event) => this.handleChange(event, "Brand")} inputProps={{ "aria-label": "uncontrolled-checkbox" }} />
+              </div>
+              <div className={style.categories}>
+                <div>Addidas</div>
+                <Checkbox name="Adidas" checked={Brand.Adidas} onChange={(event) => this.handleChange(event, "Brand")} inputProps={{ "aria-label": "uncontrolled-checkbox" }} />
+              </div>
+            </Grid>
+            {/* <Grid xs={12} className={style.categoriesContainer}>
                 <div className={style.categoriesHeader}>Country of origin </div>
                 <div className={style.categories}>
                   <div>INDIA</div>
@@ -329,62 +272,54 @@ class Home extends Component {
                   <Checkbox inputProps={{ "aria-label": "uncontrolled-checkbox" }} />
                 </div>
               </Grid> */}
+          </Grid>
+          <Grid item xs={10}>
+            <Grid container justify="flex-end">
+              <FormControl className={classes.formControl} style={{ marginTop: "20px" }}>
+                {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
+                <Select defaultValue="date" labelId="demo-simple-select-label" id="demo-simple-select-outlined" value={this.state.select} onChange={this.handleSelect}>
+                  <ListItem value="asc" className={classes.MenuItem}>
+                    Low to Heigh
+                  </ListItem>
+                  <ListItem value="dsc" className={classes.MenuItem}>
+                    Hight to Low
+                  </ListItem>
+                  <ListItem value="date" className={classes.MenuItem}>
+                    Newest
+                  </ListItem>
+                  {/* <MenuItem value={30}>Thirty</MenuItem> */}
+                </Select>
+              </FormControl>
             </Grid>
-            <Grid item xs={10}>
-              <Grid container justify="flex-end">
-                <FormControl className={classes.formControl} style={{ marginTop: "20px" }}>
-                  {/* <InputLabel id="demo-simple-select-label">Age</InputLabel> */}
-                  <Select defaultValue="date" labelId="demo-simple-select-label" id="demo-simple-select-outlined" value={this.state.select} onChange={this.handleSelect}>
-                    <ListItem value="asc" className={classes.MenuItem}>
-                      Low to Heigh
-                    </ListItem>
-                    <ListItem value="dsc" className={classes.MenuItem}>
-                      Hight to Low
-                    </ListItem>
-                    <ListItem value="date" className={classes.MenuItem}>
-                      Newest
-                    </ListItem>
-                    {/* <MenuItem value={30}>Thirty</MenuItem> */}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid container>
-                {this.state.data &&
-                  this.state.data?.map((item) => {
-                    return (
-                      <Grid xs={3}>
-                        <Card className={classes.root} style={{ margin: "8px" }}>
-                          <CardActionArea>
-                            {/* <CardMedia className={classes.    
+            <Grid container>
+              {this.state.data &&
+                this.state.data?.map((item) => {
+                  return (
+                    <Grid xs={3}>
+                      <Card className={classes.root} style={{ margin: "8px" }}>
+                        <CardActionArea>
+                          {/* <CardMedia className={classes.    
 } image={} title="Contemplative Reptile" /> */}
-                            <img className={style.cardmedia} src={item.image} alt="" srcset="" />
-                            <CardContent className={style.cardContent}>
-                              <Typography gutterBottom variant="h7" component="h7">
-                                {item.code}
-                              </Typography>
-                              <div>{item.categories}</div>
-                              <div>Price:{item.Price}</div>
-                            </CardContent>
-                          </CardActionArea>
-                        </Card>
-                      </Grid>
-                    );
-                  })}
-              </Grid>
+                          <img className={style.cardmedia} src={item.image} alt="" srcset="" />
+                          <CardContent className={style.cardContent}>
+                            <Typography gutterBottom variant="h7" component="h7">
+                              {item.name}
+                            </Typography>
+                            <div>{item.categories}</div>
+                            <div>Price:{item.Price}</div>
+                          </CardContent>
+                          <Button onClick={() => this.props.addToCart(item)} fullWidth>
+                            Add to Cart
+                          </Button>
+                        </CardActionArea>
+                      </Card>
+                    </Grid>
+                  );
+                })}
             </Grid>
           </Grid>
-          <Footer />
-          <Modal open={this.state.open.login} onClose={() => this.handleClose("login")} aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description">
-            <div style={this.state.modalStyle} className={classes.paper}>
-              <Login />
-            </div>
-          </Modal>
-          <Modal open={this.state.open.signup} onClose={() => this.handleClose("signup")} aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description">
-            <div style={this.state.modalStyle} className={classes.paper}>
-              <SignUp />
-            </div>
-          </Modal>
         </Grid>
+        <Footer />
       </>
     );
   }

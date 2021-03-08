@@ -21,6 +21,7 @@ import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
+import Badge from "@material-ui/core/Badge";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -171,15 +172,29 @@ function Navbar(props) {
                   }
                 />
               </FormControl>
-              <FavoriteBorderIcon />
-              <ShoppingCartIcon />
-
+              <IconButton aria-label="show 17 new notifications" color="inherit">
+                <FavoriteBorderIcon />
+              </IconButton>
+              <Link
+                to={{
+                  pathname: "/cart",
+                  state: { fromDashboard: true },
+                }}
+              >
+                <IconButton aria-label="show 17 new notifications" color="inherit">
+                  <Badge badgeContent={props.cartItem} color="secondary">
+                    <ShoppingCartIcon />
+                  </Badge>
+                </IconButton>
+              </Link>
               <PopupState variant="popover" popupId="demo-popup-menu">
                 {(popupState) => (
                   <React.Fragment>
-                    <Button {...bindTrigger(popupState)}>
-                      <AccountCircleIcon />
-                    </Button>
+                    <IconButton aria-label="show 17 new notifications" color="inherit">
+                      <Button {...bindTrigger(popupState)}>
+                        <AccountCircleIcon />
+                      </Button>
+                    </IconButton>
                     {/* <Menu > */}
                     <StyledMenu id="customized-menu" keepMounted {...bindMenu(popupState)}>
                       <ListItem onClick={() => props.handleOpen("login")}>Login</ListItem>
