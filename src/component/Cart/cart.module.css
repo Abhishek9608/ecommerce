@@ -4,6 +4,12 @@
   margin-bottom: 50px;
 }
 
+@media screen and (min-width: 0px) and (max-width: 428px) {
+  .CardContent {
+    flex-direction: column;
+  }
+}
+
 .mainContent {
   margin-top: 50px;
   margin-left: 100px;
@@ -11,7 +17,9 @@
   display: flex;
 
   justify-content: space-evenly;
+  flex-wrap: wrap;
 }
+
 .mainBody {
   display: flex;
 }
@@ -63,4 +71,12 @@
 .checkout {
   background: #dcaba6 !important;
   padding: 10px 102px !important;
+}
+
+@media screen and (min-width: 0px) and (max-width: 1280px) {
+  .mainContent {
+    margin-top: 0px;
+    margin-left: 0px;
+    margin: 10px;
+  }
 }

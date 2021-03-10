@@ -108,6 +108,7 @@ function App() {
   };
 
   const handleClose = (close) => {
+    console.log("called");
     setOpen({
       ...open,
       [close]: false,
@@ -156,6 +157,7 @@ function App() {
     });
     findTotal();
   };
+  console.log(open);
   return (
     <Grid xs={12}>
       <Navbar search={search} handleInput={handleInput} handleOpen={handleOpen} cartItem={cart.length} />
@@ -165,10 +167,10 @@ function App() {
             <Home addToCart={addToCart} search={search} open={open} handleClose={handleClose} />
           </Route>
           <Route exact path="/login">
-            <Login />
+            <Login handleClose={handleClose} />
           </Route>
           <Route exact path="/signup">
-            <Signup />
+            <Signup handleClose={handleClose} />
           </Route>
           <Route exact path="/cart">
             <Cart cart={cart} removeFromCart={removeFromCart} decreaseItemQuantity={decreaseItemQuantity} IncreaseItemQuantity={IncreaseItemQuantity} key={total} total={total} />
@@ -177,12 +179,12 @@ function App() {
       </MuiThemeProvider>
       <Modal open={open.login} onClose={() => handleClose("login")} aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description">
         <div style={modalStyle} className={classes.paper}>
-          <Login />
+          <Login handleClose={handleClose} />
         </div>
       </Modal>
       <Modal open={open.signup} onClose={() => handleClose("signup")} aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description">
         <div style={modalStyle} className={classes.paper}>
-          <Signup />
+          <Signup handleClose={handleClose} />
         </div>
       </Modal>
     </Grid>

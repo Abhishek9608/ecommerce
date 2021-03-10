@@ -2,12 +2,13 @@ import React from "react";
 import Navbar from "../Navbar/Navbar";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
-import { Typography, Grid, FormControl, InputLabel, Input } from "@material-ui/core";
+import { Typography, Grid, FormControl, InputLabel, Input, IconButton } from "@material-ui/core";
 import style from "./Login.module.css";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import CloseIcon from "@material-ui/icons/Close";
 
-function Login() {
+function Login(props) {
   const [state, setState] = React.useState({
     checkedA: true,
     checkedB: true,
@@ -21,7 +22,12 @@ function Login() {
   return (
     <div>
       {/* <Navbar /> */}
-      <Grid xs={12} container justify="center" style={{ backgroundColor: "#fff" }}>
+      <Grid xs={12} container justify="flex-end" style={{ backgroundColor: "#fff" }}>
+        <div className={style.closeIconContainer}>
+          <IconButton>
+            <CloseIcon onClick={() => props.handleClose("login")} />
+          </IconButton>
+        </div>
         <Grid xs={12} justify="center">
           <Typography variant="h2">SignIn</Typography>
           <Typography variant="body1" style={{ borderBottom: "1px solid #00040a" }}>

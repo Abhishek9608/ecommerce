@@ -59,12 +59,12 @@ class cart extends Component {
     const { classes, theme, cart } = this.props;
     const { data, count } = this.state;
     return (
-      <Grid xs={12} className={styles.mainContent}>
+      <div className={styles.mainContent}>
         {!cart.length ? (
           <Typography>Cart is empty</Typography>
         ) : (
           <>
-            <Grid xs={7}>
+            <Grid xs={10} lg={7}>
               {cart.map((item) => {
                 return (
                   <Card className={styles.CardContent}>
@@ -99,7 +99,7 @@ class cart extends Component {
                 );
               })}
             </Grid>
-            <Grid xs={3}>
+            <Grid xs={10} lg={3}>
               <Grid className={styles.OrderHeader}>ORDER SUMMARY</Grid>
               <Grid className={styles.billContainer}>
                 <Grid className={styles.subTotalContainer}>
@@ -115,7 +115,7 @@ class cart extends Component {
             </Grid>
           </>
         )}
-      </Grid>
+      </div>
     );
   }
 }

@@ -226,7 +226,7 @@ class Home extends Component {
   };
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     const { classes } = this.props;
     let { Brand, categories } = this.state.checkbox;
     return (
